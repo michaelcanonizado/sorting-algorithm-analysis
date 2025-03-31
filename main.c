@@ -78,6 +78,7 @@ int startingValue = 0;
 int main(void) { 
     int isExit = 0;
     while(!isExit) {
+        clearScreen();
         int numOfIntegers = 0;
         printf("\nNumber of integers (N): ");
         scanf("%d", &numOfIntegers);
@@ -107,6 +108,7 @@ int main(void) {
                 break;
         }
 
+        clearScreen();
         printf("\n----------------------------------------");
         printf("\nSorting Algorithm Results");
         printf("\n----------------------------------------");
