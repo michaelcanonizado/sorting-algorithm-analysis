@@ -19,11 +19,11 @@ typedef struct {
 /**
  * @brief The function that is called in random integers data generation case. 
  */
-void methodRandomIntegers(int n);
+void methodRandomIntegers(int n, SortingAlgorithm *algorithms, int algorithmsSize);
 /**
  * @brief The function that is called in increasing sequence data generation case. 
  */
-void methodIncreasingSequence(int n);
+void methodIncreasingSequence(int n, SortingAlgorithm *algorithms, int algorithmsSize);
 
 /**
  * @brief Generates an array of random integers.
@@ -51,16 +51,6 @@ void mergeSort(int arr[], int n);
 void quickSort(int arr[], int n);
 void heapSort(int arr[], int n);
 
-SortingAlgorithm algorithms[] = {
-    {"Selection Sort", 0.0, selectionSort},
-    {"Bubble Sort", 0.0,  bubbleSort},
-    {"Insertion Sort", 0.0, insertionSort},
-    {"Merge Sort", 0.0, mergeSort},
-    {"Quick Sort", 0.0, quickSort},
-    {"Heap Sort", 0.0, heapSort},
-};
-int algorithmsSize = sizeof(algorithms)/sizeof(algorithms[0]);
-
 int main(void) { 
     int isExit = 0;
     while(!isExit) {
@@ -82,12 +72,22 @@ int main(void) {
         printf("\nPlease choose a method: ");
         scanf("%d", &selectedGenerationMethod);
 
+        SortingAlgorithm algorithms[] = {
+            {"Selection Sort", 0.0, selectionSort},
+            {"Bubble Sort", 0.0,  bubbleSort},
+            {"Insertion Sort", 0.0, insertionSort},
+            {"Merge Sort", 0.0, mergeSort},
+            {"Quick Sort", 0.0, quickSort},
+            {"Heap Sort", 0.0, heapSort},
+        };
+        int algorithmsSize = sizeof(algorithms)/sizeof(algorithms[0]);
+
         switch (selectedGenerationMethod) {
             case 1:
-                methodRandomIntegers(numOfIntegers);
+                methodRandomIntegers(numOfIntegers, algorithms, algorithmsSize);
                 break;
             case 2:
-                methodIncreasingSequence(numOfIntegers);
+                methodIncreasingSequence(numOfIntegers, algorithms, algorithmsSize);
                 break;
             default:
                 break;
@@ -101,7 +101,7 @@ int main(void) {
 * DATA GENERATION METHOD CASES
 *
 */
-void methodRandomIntegers(int n) {
+void methodRandomIntegers(int n, SortingAlgorithm *algorithms, int algorithmsSize) {
     int *unsortedArr = generateRandomIntegers(n);
                     
     printf("\n");
@@ -109,7 +109,7 @@ void methodRandomIntegers(int n) {
         printf("%d,", unsortedArr[i]);
     }
 }
-void methodIncreasingSequence(int n) {
+void methodIncreasingSequence(int n, SortingAlgorithm *algorithms, int algorithmsSize) {
     int *unsortedArr = generateIncreasingSequence(n,7);
                     
     printf("\n");
