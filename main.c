@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 /**
  * @struct SortingAlgorithm
@@ -63,6 +64,7 @@ void heapSort(int arr[], int n);
  * 
 */
 void clearScreen();
+void displayConfirmExit(void);
 
 SortingAlgorithm algorithms[] = {
     {"Selection Sort", 0.0, selectionSort},
@@ -131,6 +133,8 @@ int main(void) {
             printf("\n|%6d | %15s | %.9lf|", i+1, algorithms[i].name, algorithms[i].time);
         }
         printf("\n----------------------------------------");
+
+        displayConfirmExit();
     }
     return 0;
 }
@@ -215,4 +219,16 @@ void clearScreen() {
 	    printf("\033[2J");
 	    printf("\033[H");
     #endif
+}
+
+void displayConfirmExit(void) {
+    char response;
+    do {
+        printf("\nEnter Y/y to exit: ");
+        scanf(" %c", &response);
+        response = toupper(response);
+        if (response != 'Y') {
+            while (getchar() != '\n');
+        }
+    } while(response != 'Y');
 }
