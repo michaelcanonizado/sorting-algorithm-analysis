@@ -49,6 +49,8 @@ void runBenchmark(int *array, int n);
 void selectionSort(int array[], int n);
 void bubbleSort(int array[], int n);
 void insertionSort(int array[], int n);
+void merge(int array[], int left, int mid, int right);
+void mergeSortHelper(int array[], int left, int right);
 void mergeSort(int array[], int n);
 void quickSort(int array[], int n);
 void heapSort(int array[], int n);
@@ -248,10 +250,66 @@ void insertionSort(int array[], int n) {
         array[j + 1] = key;
     }
 }
+void merge(int array[], int left, int mid, int right) {
+    int leftSize = mid - left + 1;
+    int rightSize = right - mid;
+
+    // Allocate memory dynamically
+    int* leftArray = (int*)malloc(leftSize * sizeof(int));
+    int* rightArray = (int*)malloc(rightSize * sizeof(int));
+
+    // Check for memory allocation failure
+    if (leftArray == NULL || rightArray == NULL) {
+        perror("Memory allocation failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // Copy data to temporary arrays
+    for (int i = 0; i < leftSize; i++) {
+        leftArray[i] = array[left + i];
+    }
+    for (int j = 0; j < rightSize; j++) {
+        rightArray[j] = array[mid + 1 + j];
+    }
+
+    int i = 0, j = 0, k = left;
+    // Merge the temporary arrays back into the main array
+    while (i < leftSize && j < rightSize) {
+        if (leftArray[i] <= rightArray[j]) {
+            array[k++] = leftArray[i++];
+        } else {
+            array[k++] = rightArray[j++];
+        }
+    }
+
+    // Copy remaining elements of leftArray
+    while (i < leftSize) {
+        array[k++] = leftArray[i++];
+    }
+    // Copy remaining elements of rightArray
+    while (j < rightSize) {
+        array[k++] = rightArray[j++];
+    }
+
+    // Free dynamically allocated memory
+    free(leftArray);
+    free(rightArray);
+}
+void mergeSortHelper(int array[], int left, int right) {
+    if (left < right) {
+        // Find the middle index
+        int mid = left + (right - left) / 2;
+
+        // Recursively sort first and second halves
+        mergeSortHelper(array, left, mid);
+        mergeSortHelper(array, mid + 1, right);
+
+        // Merge the sorted halves
+        merge(array, left, mid, right);
+    }
+}
 void mergeSort(int array[], int n) {
-    for(int i = 0; i < 1000000; i++);
-    printf("\nRunning mergeSort()");
-    return;
+    mergeSortHelper(array, 0, n - 1);
 }
 void quickSort(int array[], int n) {
     printf("\nRunning quickSort()");
