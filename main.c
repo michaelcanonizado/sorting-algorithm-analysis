@@ -161,6 +161,7 @@ void methodRandomIntegers(int n) {
     }
 
     runBenchmark(unsortedArr, n);
+    free(unsortedArr);
 }
 void methodIncreasingSequence(int n) {
     startingValue = 7;
@@ -170,6 +171,9 @@ void methodIncreasingSequence(int n) {
     for(int i = 0; i < n; i++) {
         printf("%d,", unsortedArr[i]);
     }
+
+    runBenchmark(unsortedArr, n);
+    free(unsortedArr);
 }
 
 /*
