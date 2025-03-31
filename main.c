@@ -18,10 +18,16 @@ typedef struct {
 
 /**
  * @brief The function that is called in random integers data generation case. 
+ * @param n The number of integers to be sorted
+ * @param algorithms The array of algorithms data that will hold the results
+ * @param algorithmsSize The number of elements in algorithms array
  */
 void methodRandomIntegers(int n, SortingAlgorithm *algorithms, int algorithmsSize);
 /**
  * @brief The function that is called in increasing sequence data generation case. 
+ * @param n The number of integers to be sorted
+ * @param algorithms The array of algorithms data that will hold the results
+ * @param algorithmsSize The number of elements in algorithms array
  */
 void methodIncreasingSequence(int n, SortingAlgorithm *algorithms, int algorithmsSize);
 
