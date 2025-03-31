@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 int* generateRandomIntegers(int n);
+int *generateIncreasingSequence(int n, int startingValue);
 
 void selectionSort(int arr[], int n);
 void bubbleSort(int arr[], int n);
@@ -49,13 +50,13 @@ int main(void) {
         int *unsortedArr;
         switch (selectedGenerationMethod) {
             case 1:
-                unsortedArr = generateRandomIntegers(numOfIntegers);
-                
+            case 2:
+                unsortedArr = generateIncreasingSequence(numOfIntegers, 9);
+                    
                 printf("\n");
                 for(int i = 0; i < numOfIntegers; i++) {
                     printf("%d,", unsortedArr[i]);
                 }
-            case 2:
             default:
                 break;
         }
@@ -67,6 +68,13 @@ int *generateRandomIntegers(int n) {
     int *arr = (int *)malloc(n * sizeof(int));
     for(int i = 0; i < n; i++) {
         arr[i] = i;
+    }
+    return arr;
+}
+int *generateIncreasingSequence(int n, int startingValue) {
+    int *arr = (int *)malloc(n * sizeof(int));
+    for(int i = 0; i < n; i++) {
+        arr[i] = startingValue++;
     }
     return arr;
 }
