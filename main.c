@@ -203,8 +203,18 @@ void runBenchmark(int *array, int n) {
 *
 */
 void selectionSort(int array[], int n) {
-    printf("\nRunning selectionSort()");
-    return;
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (array[j] < array[minIndex]) {
+                minIndex = j;
+            }
+        }
+        // Swap
+        int temp = array[i];
+        array[i] = array[minIndex];
+        array[minIndex] = temp;
+    }
 }
 void bubbleSort(int array[], int n) {
     for(int i = 0; i < 1000; i++);
