@@ -179,7 +179,8 @@ void runBenchmark(int *array, int n) {
     LARGE_INTEGER frequency, start, end;
     QueryPerformanceFrequency(&frequency);
 
-    for (int i = 0; i < algorithmsSize; i++) {
+    appendStringToFile("results.csv", "\n");
+    for(int i = 0; i < algorithmsSize; i++) {
         int* arrayCopy = duplicateArray(array, n);
 
         QueryPerformanceCounter(&start);
@@ -191,6 +192,8 @@ void runBenchmark(int *array, int n) {
         clearFile(algorithms[i].outputFile);
         appendStringToFile(algorithms[i].outputFile, "\n%s Sorted Array | Number of elements (N): %d | Time take: %.9lf\n",algorithms[i].name, n, algorithms[i].time);
         appendArrayToFile(algorithms[i].outputFile, arrayCopy, n);
+
+        appendStringToFile("results.csv", "%.9lf,", algorithms[i].time);
     }
 }
 
