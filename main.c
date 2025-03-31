@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <time.h>
+#include <windows.h>
 
 /**
  * @struct SortingAlgorithm
@@ -46,17 +48,23 @@ int *generateRandomIntegers(int n);
  */
 int *generateIncreasingSequence(int n, int startingValue);
 
+/**
+ * @brief temp
+ * @param temp Temp
+ */
+void runBenchmark(int *array, int n);
+
 /*
 *
 * SORTING ALGORITHMS
 *
 */
-void selectionSort(int arr[], int n);
-void bubbleSort(int arr[], int n);
-void insertionSort(int arr[], int n);
-void mergeSort(int arr[], int n);
-void quickSort(int arr[], int n);
-void heapSort(int arr[], int n);
+void selectionSort(int array[], int n);
+void bubbleSort(int array[], int n);
+void insertionSort(int array[], int n);
+void mergeSort(int array[], int n);
+void quickSort(int array[], int n);
+void heapSort(int array[], int n);
 
 /**
  * 
@@ -151,6 +159,8 @@ void methodRandomIntegers(int n) {
     for(int i = 0; i < n; i++) {
         printf("%d,", unsortedArr[i]);
     }
+
+    runBenchmark(unsortedArr, n);
 }
 void methodIncreasingSequence(int n) {
     startingValue = 7;
@@ -182,32 +192,48 @@ int *generateIncreasingSequence(int n, int startingValue) {
     return arr;
 }
 
+void runBenchmark(int *array, int n) {
+    LARGE_INTEGER frequency, start, end;
+    QueryPerformanceFrequency(&frequency);
+
+    for (int i = 0; i < algorithmsSize; i++) {
+        QueryPerformanceCounter(&start);
+        algorithms[i].function(array, n);
+        QueryPerformanceCounter(&end);
+
+        algorithms[i].time = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
+    }
+}
+
 /*
 *
 * SORTING ALGORITHMS
 *
 */
-void selectionSort(int arr[], int n) {
+void selectionSort(int array[], int n) {
     printf("\nRunning selectionSort()");
     return;
 }
-void bubbleSort(int arr[], int n) {
+void bubbleSort(int array[], int n) {
+    for(int i = 0; i < 1000; i++);
     printf("\nRunning bubbleSort()");
     return;
 }
-void insertionSort(int arr[], int n) {
+void insertionSort(int array[], int n) {
     printf("\nRunning insertionSort()");
     return;
 }
-void mergeSort(int arr[], int n) {
+void mergeSort(int array[], int n) {
+    for(int i = 0; i < 1000000; i++);
     printf("\nRunning mergeSort()");
     return;
 }
-void quickSort(int arr[], int n) {
+void quickSort(int array[], int n) {
     printf("\nRunning quickSort()");
     return;
 }
-void heapSort(int arr[], int n) {
+void heapSort(int array[], int n) {
+    for(int i = 0; i < 100000; i++);
     printf("\nRunning heapSort()");
     return;
 }
@@ -220,7 +246,6 @@ void clearScreen() {
 	    printf("\033[H");
     #endif
 }
-
 void displayConfirmExit(void) {
     char response;
     do {
