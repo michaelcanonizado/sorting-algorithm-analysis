@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+int* generateRandomIntegers(int n);
 
 void selectionSort(int arr[], int n);
 void bubbleSort(int arr[], int n);
@@ -22,12 +25,7 @@ SortingAlgorithm algorithms[] = {
 };
 int algorithmsSize = sizeof(algorithms)/sizeof(algorithms[0]);
 
-int main(void) {
-    int arr[] = {1,2,3,4,5,6,7,8,9};
-    for(int i = 0; i < algorithmsSize; i++) {
-        algorithms[i].function(arr,1);
-    }
-    
+int main(void) { 
     int isExit = 0;
     while(!isExit) {
         int numOfIntegers = 0;
@@ -48,14 +46,29 @@ int main(void) {
         printf("\nPlease choose a method: ");
         scanf("%d", &selectedGenerationMethod);
 
+        int *unsortedArr;
         switch (selectedGenerationMethod) {
             case 1:
+                unsortedArr = generateRandomIntegers(numOfIntegers);
+                
+                printf("\n");
+                for(int i = 0; i < numOfIntegers; i++) {
+                    printf("%d,", unsortedArr[i]);
+                }
             case 2:
             default:
                 break;
         }
     }
     return 0;
+}
+
+int *generateRandomIntegers(int n) {
+    int *arr = (int *)malloc(n * sizeof(int));
+    for(int i = 0; i < n; i++) {
+        arr[i] = i;
+    }
+    return arr;
 }
 
 void selectionSort(int arr[], int n) {
