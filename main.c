@@ -61,6 +61,7 @@ void heapSort(int array[], int n);
 void clearFile(const char *filename);
 void appendStringToFile(const char *filename, const char *format, ...);
 void appendArrayToFile(const char *filename, int *array, int n);
+int* duplicateArray(const int *array, int n);
 void clearScreen();
 void displayConfirmExit(void);
 
@@ -263,6 +264,17 @@ void appendArrayToFile(const char *filename, int *array, int n) {
     fprintf(file, "\n");
 
     fclose(file);
+}
+int* duplicateArray(const int *array, int n) {
+    int *copy = malloc(n * sizeof(int));
+    if (copy == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return NULL;
+    }
+    for (int i = 0; i < n; i++) {
+        copy[i] = array[i];
+    }
+    return copy;
 }
 void clearScreen() {
     #ifdef _WIN32
