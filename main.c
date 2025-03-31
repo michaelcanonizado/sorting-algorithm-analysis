@@ -217,9 +217,20 @@ void selectionSort(int array[], int n) {
     }
 }
 void bubbleSort(int array[], int n) {
-    for(int i = 0; i < 1000; i++);
-    printf("\nRunning bubbleSort()");
-    return;
+    for (int i = 0; i < n - 1; i++) {
+        int swapped = 0;
+        for (int j = 0; j < n - i - 1; j++) {
+            if (array[j] > array[j + 1]) {
+                // Swap
+                int temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
+                swapped = 1;
+            }
+        }
+        // Stop if already sorted
+        if (!swapped) break;
+    }
 }
 void insertionSort(int array[], int n) {
     printf("\nRunning insertionSort()");
