@@ -57,8 +57,6 @@ void mergeSort(int arr[], int n);
 void quickSort(int arr[], int n);
 void heapSort(int arr[], int n);
 
-void displayAlgorithms(void);
-
 SortingAlgorithm algorithms[] = {
     {"Selection Sort", 0.0, selectionSort},
     {"Bubble Sort", 0.0,  bubbleSort},
@@ -68,6 +66,7 @@ SortingAlgorithm algorithms[] = {
     {"Heap Sort", 0.0, heapSort},
 };
 int algorithmsSize = sizeof(algorithms)/sizeof(algorithms[0]);
+int startingValue = 0;
 
 int main(void) { 
     int isExit = 0;
@@ -101,7 +100,28 @@ int main(void) {
                 break;
         }
 
-        displayAlgorithms();
+        printf("\n----------------------------------------");
+        printf("\nSorting Algorithm Results");
+        printf("\n----------------------------------------");
+        printf("\nNumber of Elements (N): %d", numOfIntegers);
+        printf("\nGeneration Method: ");
+        if (selectedGenerationMethod == 1) {
+            printf("Random Integers");
+        } else if (selectedGenerationMethod == 2) {
+            printf("Increasing Sequence");
+        }
+        if (selectedGenerationMethod == 2) {
+            printf("\nStarting Value (X): %d", startingValue);
+        }
+        
+
+        printf("\n----------------------------------------");
+        printf("\n|  Rank |    Algorithm    |    Time    |");
+        printf("\n----------------------------------------");
+        for(int i = 0; i < algorithmsSize; i++) {
+            printf("\n|%6d | %15s | %.9lf|", i+1, algorithms[i].name, algorithms[i].time);
+        }
+        printf("\n----------------------------------------");
     }
     return 0;
 }
@@ -120,7 +140,8 @@ void methodRandomIntegers(int n) {
     }
 }
 void methodIncreasingSequence(int n) {
-    int *unsortedArr = generateIncreasingSequence(n,7);
+    startingValue = 7;
+    int *unsortedArr = generateIncreasingSequence(n, startingValue);
                     
     printf("\n");
     for(int i = 0; i < n; i++) {
@@ -176,14 +197,4 @@ void quickSort(int arr[], int n) {
 void heapSort(int arr[], int n) {
     printf("\nRunning heapSort()");
     return;
-}
-
-
-void displayAlgorithms(void) {
-    printf("\nSorting Algorithm Results");
-    printf("\n---------------------------------");
-    for(int i = 0; i < algorithmsSize; i++) {
-        printf("\n%2d | %15s | %.9lf", i+1, algorithms[i].name, algorithms[i].time);
-    }
-    printf("\n---------------------------------");
 }
