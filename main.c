@@ -57,6 +57,8 @@ void mergeSort(int arr[], int n);
 void quickSort(int arr[], int n);
 void heapSort(int arr[], int n);
 
+void displayAlgorithms(SortingAlgorithm *algorithms, int algorithmsSize);
+
 int main(void) { 
     int isExit = 0;
     while(!isExit) {
@@ -98,6 +100,8 @@ int main(void) {
             default:
                 break;
         }
+
+        displayAlgorithms(algorithms, algorithmsSize);
     }
     return 0;
 }
@@ -172,4 +176,14 @@ void quickSort(int arr[], int n) {
 void heapSort(int arr[], int n) {
     printf("\nRunning heapSort()");
     return;
+}
+
+
+void displayAlgorithms(SortingAlgorithm *algorithms, int algorithmsSize) {
+    printf("\nSorting Algorithm Results");
+    printf("\n---------------------------------");
+    for(int i = 0; i < algorithmsSize; i++) {
+        printf("\n%2d | %15s | %.9lf", i+1, algorithms[i].name, algorithms[i].time);
+    }
+    printf("\n---------------------------------");
 }
