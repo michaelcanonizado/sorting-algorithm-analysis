@@ -249,7 +249,6 @@ void appendStringToFile(const char *filename, const char *format, ...) {
     va_list args;
     va_start(args, format);
     vfprintf(file, format, args);
-    fprintf(file, "\n");
     va_end(args);
 
     fclose(file);
