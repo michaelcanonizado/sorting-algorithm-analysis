@@ -96,9 +96,13 @@ int main(void) {
         scanf("%d", &selectedGenerationMethod);
 
         int *unsortedArr, startingValue = 0;
+        char *unsortedArrayOutputFile = "unsorted.txt";
         switch (selectedGenerationMethod) {
             case 1:
                 unsortedArr = generateRandomIntegers(numOfIntegers);
+
+                appendStringToFile(unsortedArrayOutputFile, "Unsorted Array | Number of elements (N): %d", numOfIntegers);
+                appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
 
                 runBenchmark(unsortedArr, numOfIntegers);
                 free(unsortedArr);
@@ -108,8 +112,8 @@ int main(void) {
                 scanf("%d", &startingValue);
                 unsortedArr = generateIncreasingSequence(numOfIntegers, startingValue);
 
-                appendStringToFile("unsorted.txt", "Unsorted Array | Time taken: %lf", 0.123456789);
-                appendArrayToFile("unsorted.txt", unsortedArr, numOfIntegers);
+                appendStringToFile(unsortedArrayOutputFile, "Unsorted Array | Number of elements (N): %d | Starting Value (X): %d", numOfIntegers, startingValue);
+                appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
 
                 runBenchmark(unsortedArr, numOfIntegers);
                 free(unsortedArr);
