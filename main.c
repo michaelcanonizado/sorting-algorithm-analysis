@@ -66,12 +66,12 @@ void clearScreen();
 void displayConfirmExit(void);
 
 SortingAlgorithm algorithms[] = {
-    {"Selection Sort", "selection-sort.txt", 0.0, selectionSort},
-    {"Bubble Sort", "bubble-sort.txt", 0.0,  bubbleSort},
-    {"Insertion Sort", "insertion-sort.txt", 0.0, insertionSort},
-    {"Merge Sort", "merge-sort.txt", 0.0, mergeSort},
-    {"Quick Sort", "quick-sort.txt", 0.0, quickSort},
-    {"Heap Sort", "heap-sort.txt", 0.0, heapSort},
+    {"Selection Sort", "output/selection-sort.txt", 0.0, selectionSort},
+    {"Bubble Sort", "output/bubble-sort.txt", 0.0,  bubbleSort},
+    {"Insertion Sort", "output/insertion-sort.txt", 0.0, insertionSort},
+    {"Merge Sort", "output/merge-sort.txt", 0.0, mergeSort},
+    {"Quick Sort", "output/quick-sort.txt", 0.0, quickSort},
+    {"Heap Sort", "output/heap-sort.txt", 0.0, heapSort},
 };
 int algorithmsSize = sizeof(algorithms)/sizeof(algorithms[0]);
 
@@ -98,7 +98,7 @@ int main(void) {
         scanf("%d", &selectedGenerationMethod);
 
         int *unsortedArr, startingValue = 0;
-        char *unsortedArrayOutputFile = "unsorted.txt";
+        char *unsortedArrayOutputFile = "output/unsorted.txt";
 
         clearFile(unsortedArrayOutputFile);
         appendStringToFile(unsortedArrayOutputFile, "\nUnsorted Array | Number of elements (N): %d\n", numOfIntegers);
