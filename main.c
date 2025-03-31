@@ -347,10 +347,46 @@ void quickSortHelper(int array[], int low, int high) {
 void quickSort(int array[], int n) {
     quickSortHelper(array, 0, n - 1);
 }
+void heapify(int array[], int n, int root) {
+    int largest = root;
+    int leftChild = 2 * root + 1;
+    int rightChild = 2 * root + 2;
+
+    // Check if left child is larger than root
+    if (leftChild < n && array[leftChild] > array[largest]) {
+        largest = leftChild;
+    }
+
+    // Check if right child is larger than the largest so far
+    if (rightChild < n && array[rightChild] > array[largest]) {
+        largest = rightChild;
+    }
+
+    // Swap and continue heapifying if root is not the largest
+    if (largest != root) {
+        int temp = array[root];
+        array[root] = array[largest];
+        array[largest] = temp;
+
+        heapify(array, n, largest);
+    }
+}
 void heapSort(int array[], int n) {
-    for(int i = 0; i < 100000; i++);
-    printf("\nRunning heapSort()");
-    return;
+    // Build a max heap
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        heapify(array, n, i);
+    }
+
+    // Extract elements one by one from heap
+    for (int i = n - 1; i > 0; i--) {
+        // Swap root (largest) with the last element
+        int temp = array[0];
+        array[0] = array[i];
+        array[i] = temp;
+
+        // Heapify the reduced heap
+        heapify(array, i, 0);
+    }
 }
 
 void clearFile(const char *filename) {
