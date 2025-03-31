@@ -154,23 +154,14 @@ int main(void) {
 */
 void methodRandomIntegers(int n) {
     int *unsortedArr = generateRandomIntegers(n);
-                    
-    printf("\n");
-    for(int i = 0; i < n; i++) {
-        printf("%d,", unsortedArr[i]);
-    }
 
     runBenchmark(unsortedArr, n);
     free(unsortedArr);
 }
 void methodIncreasingSequence(int n) {
-    startingValue = 7;
+    printf("What is the starting value? (X): ");
+    scanf("%d", &startingValue);
     int *unsortedArr = generateIncreasingSequence(n, startingValue);
-                    
-    printf("\n");
-    for(int i = 0; i < n; i++) {
-        printf("%d,", unsortedArr[i]);
-    }
 
     runBenchmark(unsortedArr, n);
     free(unsortedArr);
