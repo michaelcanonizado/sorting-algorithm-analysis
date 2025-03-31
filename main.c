@@ -1,12 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * @brief The function that is called in random integers data generation case. 
+ */
 void methodRandomIntegers(int n);
+/**
+ * @brief The function that is called in increasing sequence data generation case. 
+ */
 void methodIncreasingSequence(int n);
 
+/**
+ * @brief Generates an array of random integers.
+ * @param n The size of the resulting array.
+ * @return The dynamically allocated array. It needs to be manually freed when used.
+ */
 int *generateRandomIntegers(int n);
+/**
+ * @brief Generates an array of integers in increasing order
+ * @param n The size of the resulting array
+ * @param startingValue The value of the first element of the ordered array.
+ * @return The dynamically allocated array. It needs to be manually freed when used.
+ */
 int *generateIncreasingSequence(int n, int startingValue);
 
+/*
+*
+* SORTING ALGORITHMS
+*
+*/
 void selectionSort(int arr[], int n);
 void bubbleSort(int arr[], int n);
 void insertionSort(int arr[], int n);
@@ -14,6 +36,15 @@ void mergeSort(int arr[], int n);
 void quickSort(int arr[], int n);
 void heapSort(int arr[], int n);
 
+/**
+ * @struct SortingAlgorithm
+ * @brief Represents the data of a sorting algorithm
+ * @var name Name of the algorithm in title case
+ * @var time Time taken for the algorithms to sort
+ * @var function Function pointer to its algorithm
+ * 
+ * This object gives us OOP-like features. Allowing us to perform more complex logic such as iteration on the algorithms, sorting by time, and callbacks.
+ */
 typedef struct {
     const char *name;
     double time;
@@ -64,6 +95,11 @@ int main(void) {
     return 0;
 }
 
+/*
+*
+* DATA GENERATION METHOD CASES
+*
+*/
 void methodRandomIntegers(int n) {
     int *unsortedArr = generateRandomIntegers(n);
                     
@@ -72,7 +108,6 @@ void methodRandomIntegers(int n) {
         printf("%d,", unsortedArr[i]);
     }
 }
-
 void methodIncreasingSequence(int n) {
     int *unsortedArr = generateIncreasingSequence(n,7);
                     
@@ -82,6 +117,11 @@ void methodIncreasingSequence(int n) {
     }
 }
 
+/*
+*
+* DATA GENERATION METHODS
+*
+*/
 int *generateRandomIntegers(int n) {
     int *arr = (int *)malloc(n * sizeof(int));
     for(int i = 0; i < n; i++) {
@@ -97,31 +137,31 @@ int *generateIncreasingSequence(int n, int startingValue) {
     return arr;
 }
 
+/*
+*
+* SORTING ALGORITHMS
+*
+*/
 void selectionSort(int arr[], int n) {
     printf("\nRunning selectionSort()");
     return;
 }
-
 void bubbleSort(int arr[], int n) {
     printf("\nRunning bubbleSort()");
     return;
 }
-
 void insertionSort(int arr[], int n) {
     printf("\nRunning insertionSort()");
     return;
 }
-
 void mergeSort(int arr[], int n) {
     printf("\nRunning mergeSort()");
     return;
 }
-
 void quickSort(int arr[], int n) {
     printf("\nRunning quickSort()");
     return;
 }
-
 void heapSort(int arr[], int n) {
     printf("\nRunning heapSort()");
     return;
