@@ -187,6 +187,10 @@ void runBenchmark(int *array, int n) {
         QueryPerformanceCounter(&end);
 
         algorithms[i].time = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
+
+        clearFile(algorithms[i].outputFile);
+        appendStringToFile(algorithms[i].outputFile, "\n%s Sorted Array | Number of elements (N): %d | Time take: %.9lf\n",algorithms[i].name, n, algorithms[i].time);
+        appendArrayToFile(algorithms[i].outputFile, arrayCopy, n);
     }
 }
 
