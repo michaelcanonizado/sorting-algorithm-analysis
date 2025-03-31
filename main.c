@@ -63,6 +63,7 @@ void appendStringToFile(const char *filename, const char *format, ...);
 void appendArrayToFile(const char *filename, int *array, int n);
 int* duplicateArray(const int *array, int n);
 void clearScreen();
+void displayHeader();
 void displayConfirmExit(void);
 
 SortingAlgorithm algorithms[] = {
@@ -79,6 +80,7 @@ int main(void) {
     int isExit = 0;
     while(!isExit) {
         clearScreen();
+        displayHeader();
         int numOfIntegers = 0;
         printf("\nNumber of integers (N): ");
         scanf("%d", &numOfIntegers);
@@ -127,9 +129,7 @@ int main(void) {
         }
 
         clearScreen();
-        printf("\n----------------------------------------");
-        printf("\nSorting Algorithm Results");
-        printf("\n----------------------------------------");
+        displayHeader();
         printf("\nNumber of Elements (N): %d", numOfIntegers);
         printf("\nGeneration Method: ");
         if (selectedGenerationMethod == 1) {
@@ -290,7 +290,12 @@ void clearScreen() {
 	    printf("\033[H");
     #endif
 }
-void displayConfirmExit(void) {
+void displayHeader() {
+    printf("\n----------------------------------------");
+    printf("\n       Sorting Algorithm Analysis");
+    printf("\n----------------------------------------");
+}
+void displayConfirmExit() {
     char response;
     do {
         printf("\nEnter Y/y to exit: ");
