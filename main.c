@@ -58,6 +58,7 @@ void heapSort(int array[], int n);
  * UTILITIES
  * 
 */
+void clearFile(const char *filename);
 void appendStringToFile(const char *filename, const char *format, ...);
 void appendArrayToFile(const char *filename, int *array, int n);
 void clearScreen();
@@ -97,11 +98,14 @@ int main(void) {
 
         int *unsortedArr, startingValue = 0;
         char *unsortedArrayOutputFile = "unsorted.txt";
+
+        clearFile(unsortedArrayOutputFile);
+        appendStringToFile(unsortedArrayOutputFile, "\nUnsorted Array | Number of elements (N): %d\n", numOfIntegers);
+
         switch (selectedGenerationMethod) {
             case 1:
                 unsortedArr = generateRandomIntegers(numOfIntegers);
-
-                appendStringToFile(unsortedArrayOutputFile, "\nUnsorted Array | Number of elements (N): %d\n", numOfIntegers);
+                
                 appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
 
                 runBenchmark(unsortedArr, numOfIntegers);
@@ -112,7 +116,6 @@ int main(void) {
                 scanf("%d", &startingValue);
                 unsortedArr = generateIncreasingSequence(numOfIntegers, startingValue);
 
-                appendStringToFile(unsortedArrayOutputFile, "\nUnsorted Array | Number of elements (N): %d | Starting Value (X): %d\n", numOfIntegers, startingValue);
                 appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
 
                 runBenchmark(unsortedArr, numOfIntegers);
@@ -217,6 +220,15 @@ void heapSort(int array[], int n) {
     return;
 }
 
+void clearFile(const char *filename) {
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
+        fprintf(stderr, "Error opening file: %s\n", filename);
+        return;
+    }
+
+    fclose(file);
+}
 void appendStringToFile(const char *filename, const char *format, ...) {
     FILE *file = fopen(filename, "a");
     if (file == NULL) {
