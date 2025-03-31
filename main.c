@@ -52,6 +52,8 @@ void insertionSort(int array[], int n);
 void merge(int array[], int left, int mid, int right);
 void mergeSortHelper(int array[], int left, int right);
 void mergeSort(int array[], int n);
+int quickSortPartition(int array[], int low, int high);
+void quickSortHelper(int array[], int low, int high);
 void quickSort(int array[], int n);
 void heapSort(int array[], int n);
 
@@ -311,9 +313,39 @@ void mergeSortHelper(int array[], int left, int right) {
 void mergeSort(int array[], int n) {
     mergeSortHelper(array, 0, n - 1);
 }
+int quickSortPartition(int array[], int low, int high) {
+    // Choose the pivot element (last element)
+    int pivot = array[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        // If current element is smaller than the pivot, swap
+        if (array[j] < pivot) {
+            i++;
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+    }
+
+    // Place pivot at its correct position
+    int temp = array[i + 1];
+    array[i + 1] = array[high];
+    array[high] = temp;
+
+    return i + 1;
+}
+void quickSortHelper(int array[], int low, int high) {
+    if (low < high) {
+        // Partition the array and get the pivot index
+        int pivotIndex = quickSortPartition(array, low, high);
+        // Recursively sort elements before and after partition
+        quickSortHelper(array, low, pivotIndex - 1);
+        quickSortHelper(array, pivotIndex + 1, high);
+    }
+}
 void quickSort(int array[], int n) {
-    printf("\nRunning quickSort()");
-    return;
+    quickSortHelper(array, 0, n - 1);
 }
 void heapSort(int array[], int n) {
     for(int i = 0; i < 100000; i++);
