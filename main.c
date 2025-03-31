@@ -8,6 +8,7 @@
  * @struct SortingAlgorithm
  * @brief Represents the data of a sorting algorithm
  * @var name Name of the algorithm in title case
+ * @var outputFile Name of the file where the sorted integers will be stored
  * @var time Time taken for the algorithms to sort
  * @var function Function pointer to its algorithm
  * 
@@ -15,6 +16,7 @@
  */
 typedef struct {
     const char *name;
+    const char *outputFile;
     double time;
     void (*function)(int[], int);
 } SortingAlgorithm;
@@ -75,12 +77,12 @@ void clearScreen();
 void displayConfirmExit(void);
 
 SortingAlgorithm algorithms[] = {
-    {"Selection Sort", 0.0, selectionSort},
-    {"Bubble Sort", 0.0,  bubbleSort},
-    {"Insertion Sort", 0.0, insertionSort},
-    {"Merge Sort", 0.0, mergeSort},
-    {"Quick Sort", 0.0, quickSort},
-    {"Heap Sort", 0.0, heapSort},
+    {"Selection Sort", "selection-sort.txt", 0.0, selectionSort},
+    {"Bubble Sort", "bubble-sort.txt", 0.0,  bubbleSort},
+    {"Insertion Sort", "insertion-sort.txt", 0.0, insertionSort},
+    {"Merge Sort", "merge-sort.txt", 0.0, mergeSort},
+    {"Quick Sort", "quick-sort.txt", 0.0, quickSort},
+    {"Heap Sort", "heap-sort.txt", 0.0, heapSort},
 };
 int algorithmsSize = sizeof(algorithms)/sizeof(algorithms[0]);
 int startingValue = 0;
