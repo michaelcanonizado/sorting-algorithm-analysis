@@ -244,6 +244,9 @@ void appendArrayToFile(const char *filename, int *array, int n) {
         if (i < n - 1) {
             fprintf(file, ",");
         }
+        if ((i+1) % 20 == 0) {
+            fprintf(file, "\n");
+        }
     }
     fprintf(file, "\n");
 
