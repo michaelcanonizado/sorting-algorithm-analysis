@@ -101,7 +101,7 @@ int main(void) {
             case 1:
                 unsortedArr = generateRandomIntegers(numOfIntegers);
 
-                appendStringToFile(unsortedArrayOutputFile, "Unsorted Array | Number of elements (N): %d", numOfIntegers);
+                appendStringToFile(unsortedArrayOutputFile, "\nUnsorted Array | Number of elements (N): %d\n", numOfIntegers);
                 appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
 
                 runBenchmark(unsortedArr, numOfIntegers);
@@ -112,7 +112,7 @@ int main(void) {
                 scanf("%d", &startingValue);
                 unsortedArr = generateIncreasingSequence(numOfIntegers, startingValue);
 
-                appendStringToFile(unsortedArrayOutputFile, "Unsorted Array | Number of elements (N): %d | Starting Value (X): %d", numOfIntegers, startingValue);
+                appendStringToFile(unsortedArrayOutputFile, "\nUnsorted Array | Number of elements (N): %d | Starting Value (X): %d\n", numOfIntegers, startingValue);
                 appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
 
                 runBenchmark(unsortedArr, numOfIntegers);
