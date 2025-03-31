@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int* generateRandomIntegers(int n);
+void methodRandomIntegers(int n);
+
+int *generateRandomIntegers(int n);
 int *generateIncreasingSequence(int n, int startingValue);
 
 void selectionSort(int arr[], int n);
@@ -50,6 +52,7 @@ int main(void) {
         int *unsortedArr;
         switch (selectedGenerationMethod) {
             case 1:
+                methodRandomIntegers(numOfIntegers);
             case 2:
                 unsortedArr = generateIncreasingSequence(numOfIntegers, 9);
                     
@@ -62,6 +65,15 @@ int main(void) {
         }
     }
     return 0;
+}
+
+void methodRandomIntegers(int n) {
+    int *unsortedArr = generateRandomIntegers(n);
+                    
+    printf("\n");
+    for(int i = 0; i < n; i++) {
+        printf("%d,", unsortedArr[i]);
+    }
 }
 
 int *generateRandomIntegers(int n) {
