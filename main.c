@@ -62,8 +62,8 @@ void clearFile(const char *filename);
 void appendStringToFile(const char *filename, const char *format, ...);
 void appendArrayToFile(const char *filename, int *array, int n);
 int* duplicateArray(const int *array, int n);
-void clearScreen();
-void displayHeader();
+void clearScreen(void);
+void displayHeader(void);
 void displayConfirmExit(void);
 
 SortingAlgorithm algorithms[] = {
@@ -282,7 +282,7 @@ int* duplicateArray(const int *array, int n) {
     }
     return copy;
 }
-void clearScreen() {
+void clearScreen(void) {
     #ifdef _WIN32
 	    system("cls");
     #else
@@ -290,12 +290,12 @@ void clearScreen() {
 	    printf("\033[H");
     #endif
 }
-void displayHeader() {
+void displayHeader(void) {
     printf("\n----------------------------------------");
     printf("\n       Sorting Algorithm Analysis");
     printf("\n----------------------------------------");
 }
-void displayConfirmExit() {
+void displayConfirmExit(void) {
     char response;
     do {
         printf("\nEnter Y/y to exit: ");
