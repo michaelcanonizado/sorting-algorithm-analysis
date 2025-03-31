@@ -57,6 +57,13 @@ void mergeSort(int arr[], int n);
 void quickSort(int arr[], int n);
 void heapSort(int arr[], int n);
 
+/**
+ * 
+ * UTILITIES
+ * 
+*/
+void clearScreen();
+
 SortingAlgorithm algorithms[] = {
     {"Selection Sort", 0.0, selectionSort},
     {"Bubble Sort", 0.0,  bubbleSort},
@@ -197,4 +204,13 @@ void quickSort(int arr[], int n) {
 void heapSort(int arr[], int n) {
     printf("\nRunning heapSort()");
     return;
+}
+
+void clearScreen() {
+    #ifdef _WIN32
+	    system("cls");
+    #else
+	    printf("\033[2J");
+	    printf("\033[H");
+    #endif
 }
