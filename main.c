@@ -58,6 +58,7 @@ void heapSort(int array[], int n);
  * UTILITIES
  * 
 */
+void appendStringToFile(const char *filename, const char *format, ...);
 void appendArrayToFile(const char *filename, int *array, int n);
 void clearScreen();
 void displayConfirmExit(void);
@@ -98,6 +99,7 @@ int main(void) {
         switch (selectedGenerationMethod) {
             case 1:
                 unsortedArr = generateRandomIntegers(numOfIntegers);
+
                 runBenchmark(unsortedArr, numOfIntegers);
                 free(unsortedArr);
                 break;
@@ -105,7 +107,10 @@ int main(void) {
                 printf("What is the starting value? (X): ");
                 scanf("%d", &startingValue);
                 unsortedArr = generateIncreasingSequence(numOfIntegers, startingValue);
+
+                appendStringToFile("unsorted.txt", "Unsorted Array | Time taken: %lf", 0.123456789);
                 appendArrayToFile("unsorted.txt", unsortedArr, numOfIntegers);
+
                 runBenchmark(unsortedArr, numOfIntegers);
                 free(unsortedArr);
                 break;
@@ -208,6 +213,21 @@ void heapSort(int array[], int n) {
     return;
 }
 
+void appendStringToFile(const char *filename, const char *format, ...) {
+    FILE *file = fopen(filename, "a");
+    if (file == NULL) {
+        fprintf(stderr, "Error opening file: %s\n", filename);
+        return;
+    }
+
+    va_list args;
+    va_start(args, format);
+    vfprintf(file, format, args);
+    fprintf(file, "\n");
+    va_end(args);
+
+    fclose(file);
+}
 void appendArrayToFile(const char *filename, int *array, int n) {
     FILE *file = fopen(filename, "a");
     if (file == NULL) {
