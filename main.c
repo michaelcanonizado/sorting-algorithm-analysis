@@ -22,21 +22,6 @@ typedef struct {
 } SortingAlgorithm;
 
 /**
- * @brief The function that is called in random integers data generation case. 
- * @param n The number of integers to be sorted
- * @param algorithms The array of algorithms data that will hold the results
- * @param algorithmsSize The number of elements in algorithms array
- */
-void methodRandomIntegers(int n);
-/**
- * @brief The function that is called in increasing sequence data generation case. 
- * @param n The number of integers to be sorted
- * @param algorithms The array of algorithms data that will hold the results
- * @param algorithmsSize The number of elements in algorithms array
- */
-void methodIncreasingSequence(int n);
-
-/**
  * @brief Generates an array of random integers.
  * @param n The size of the resulting array.
  * @return The dynamically allocated array. It needs to be manually freed when used.
@@ -85,7 +70,6 @@ SortingAlgorithm algorithms[] = {
     {"Heap Sort", "heap-sort.txt", 0.0, heapSort},
 };
 int algorithmsSize = sizeof(algorithms)/sizeof(algorithms[0]);
-int startingValue = 0;
 
 int main(void) { 
     int isExit = 0;
@@ -109,12 +93,19 @@ int main(void) {
         printf("\nPlease choose a method: ");
         scanf("%d", &selectedGenerationMethod);
 
+        int *unsortedArr, startingValue = 0;
         switch (selectedGenerationMethod) {
             case 1:
-                methodRandomIntegers(numOfIntegers);
+                unsortedArr = generateRandomIntegers(numOfIntegers);
+                runBenchmark(unsortedArr, numOfIntegers);
+                free(unsortedArr);
                 break;
             case 2:
-                methodIncreasingSequence(numOfIntegers);
+                printf("What is the starting value? (X): ");
+                scanf("%d", &startingValue);
+                unsortedArr = generateIncreasingSequence(numOfIntegers, startingValue);
+                runBenchmark(unsortedArr, numOfIntegers);
+                free(unsortedArr);
                 break;
             default:
                 break;
@@ -147,26 +138,6 @@ int main(void) {
         displayConfirmExit();
     }
     return 0;
-}
-
-/*
-*
-* DATA GENERATION METHOD CASES
-*
-*/
-void methodRandomIntegers(int n) {
-    int *unsortedArr = generateRandomIntegers(n);
-
-    runBenchmark(unsortedArr, n);
-    free(unsortedArr);
-}
-void methodIncreasingSequence(int n) {
-    printf("What is the starting value? (X): ");
-    scanf("%d", &startingValue);
-    int *unsortedArr = generateIncreasingSequence(n, startingValue);
-
-    runBenchmark(unsortedArr, n);
-    free(unsortedArr);
 }
 
 /*
