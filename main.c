@@ -58,6 +58,7 @@ void heapSort(int array[], int n);
  * UTILITIES
  * 
 */
+void appendArrayToFile(const char *filename, int *array, int n);
 void clearScreen();
 void displayConfirmExit(void);
 
@@ -104,6 +105,7 @@ int main(void) {
                 printf("What is the starting value? (X): ");
                 scanf("%d", &startingValue);
                 unsortedArr = generateIncreasingSequence(numOfIntegers, startingValue);
+                appendArrayToFile("unsorted.txt", unsortedArr, numOfIntegers);
                 runBenchmark(unsortedArr, numOfIntegers);
                 free(unsortedArr);
                 break;
@@ -206,6 +208,23 @@ void heapSort(int array[], int n) {
     return;
 }
 
+void appendArrayToFile(const char *filename, int *array, int n) {
+    FILE *file = fopen(filename, "a");
+    if (file == NULL) {
+        fprintf(stderr, "Error opening file: %s\n", filename);
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+        fprintf(file, "%d", array[i]);
+        if (i < n - 1) {
+            fprintf(file, ",");
+        }
+    }
+    fprintf(file, "\n");
+
+    fclose(file);
+}
 void clearScreen() {
     #ifdef _WIN32
 	    system("cls");
