@@ -2,6 +2,21 @@
 #include <stdlib.h>
 
 /**
+ * @struct SortingAlgorithm
+ * @brief Represents the data of a sorting algorithm
+ * @var name Name of the algorithm in title case
+ * @var time Time taken for the algorithms to sort
+ * @var function Function pointer to its algorithm
+ * 
+ * This object gives us OOP-like features. Allowing us to perform more complex logic such as iteration on the algorithms, sorting by time, and callbacks.
+ */
+typedef struct {
+    const char *name;
+    double time;
+    void (*function)(int[], int);
+} SortingAlgorithm;
+
+/**
  * @brief The function that is called in random integers data generation case. 
  */
 void methodRandomIntegers(int n);
@@ -36,20 +51,6 @@ void mergeSort(int arr[], int n);
 void quickSort(int arr[], int n);
 void heapSort(int arr[], int n);
 
-/**
- * @struct SortingAlgorithm
- * @brief Represents the data of a sorting algorithm
- * @var name Name of the algorithm in title case
- * @var time Time taken for the algorithms to sort
- * @var function Function pointer to its algorithm
- * 
- * This object gives us OOP-like features. Allowing us to perform more complex logic such as iteration on the algorithms, sorting by time, and callbacks.
- */
-typedef struct {
-    const char *name;
-    double time;
-    void (*function)(int[], int);
-} SortingAlgorithm;
 SortingAlgorithm algorithms[] = {
     {"Selection Sort", 0.0, selectionSort},
     {"Bubble Sort", 0.0,  bubbleSort},
