@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 void methodRandomIntegers(int n);
+void methodIncreasingSequence(int n);
 
 int *generateRandomIntegers(int n);
 int *generateIncreasingSequence(int n, int startingValue);
@@ -49,17 +50,13 @@ int main(void) {
         printf("\nPlease choose a method: ");
         scanf("%d", &selectedGenerationMethod);
 
-        int *unsortedArr;
         switch (selectedGenerationMethod) {
             case 1:
                 methodRandomIntegers(numOfIntegers);
+                break;
             case 2:
-                unsortedArr = generateIncreasingSequence(numOfIntegers, 9);
-                    
-                printf("\n");
-                for(int i = 0; i < numOfIntegers; i++) {
-                    printf("%d,", unsortedArr[i]);
-                }
+                methodIncreasingSequence(numOfIntegers);
+                break;
             default:
                 break;
         }
@@ -69,6 +66,15 @@ int main(void) {
 
 void methodRandomIntegers(int n) {
     int *unsortedArr = generateRandomIntegers(n);
+                    
+    printf("\n");
+    for(int i = 0; i < n; i++) {
+        printf("%d,", unsortedArr[i]);
+    }
+}
+
+void methodIncreasingSequence(int n) {
+    int *unsortedArr = generateIncreasingSequence(n,7);
                     
     printf("\n");
     for(int i = 0; i < n; i++) {
