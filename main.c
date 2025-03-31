@@ -233,8 +233,20 @@ void bubbleSort(int array[], int n) {
     }
 }
 void insertionSort(int array[], int n) {
-    printf("\nRunning insertionSort()");
-    return;
+    for (int i = 1; i < n; i++) {
+        // Store the current element
+        int key = array[i];
+        int j = i - 1;
+
+        // Shift elements greater than key to the right
+        while (j >= 0 && array[j] > key) {
+            array[j + 1] = array[j];
+            j--;
+        }
+
+        // Insert key at the correct position
+        array[j + 1] = key;
+    }
 }
 void mergeSort(int array[], int n) {
     for(int i = 0; i < 1000000; i++);
