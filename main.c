@@ -180,8 +180,10 @@ void runBenchmark(int *array, int n) {
     QueryPerformanceFrequency(&frequency);
 
     for (int i = 0; i < algorithmsSize; i++) {
+        int* arrayCopy = duplicateArray(array, n);
+
         QueryPerformanceCounter(&start);
-        algorithms[i].function(array, n);
+        algorithms[i].function(arrayCopy, n);
         QueryPerformanceCounter(&end);
 
         algorithms[i].time = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
