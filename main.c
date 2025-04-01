@@ -229,20 +229,28 @@ void runBenchmark(unsigned long int *array, int n) {
     LARGE_INTEGER frequency, start, end;
     QueryPerformanceFrequency(&frequency);
 
+    // The benchmarks result will also be outputted in a csv
     appendStringToFile("results.csv", "\n");
     for(int i = 0; i < algorithmsSize; i++) {
+        // Duplicate the data for each sorting algorithm
         unsigned long int *arrayCopy = duplicateArray(array, n);
 
+        // Start the timer
         QueryPerformanceCounter(&start);
+        // Run the sorting algorithm
         algorithms[i].function(arrayCopy, n);
+        // End the timer
         QueryPerformanceCounter(&end);
 
+        // Calculate the elapsed time
         algorithms[i].time = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
 
+        // Clear and output the sorted data into a file per algorithm
         clearFile(algorithms[i].outputFile);
         appendStringToFile(algorithms[i].outputFile, "\n%s Sorted Array | Number of elements (N): %d | Time take: %.9lf\n",algorithms[i].name, n, algorithms[i].time);
         appendArrayToFile(algorithms[i].outputFile, arrayCopy, n);
 
+        // Append the elapsed time to results.csv
         appendStringToFile("results.csv", "%.9lf,", algorithms[i].time);
     }
 }
