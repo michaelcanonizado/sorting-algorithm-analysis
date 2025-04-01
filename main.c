@@ -76,6 +76,7 @@ int compareByTime(const void *a, const void *b);
 void clearScreen(void);
 void displayHeader(void);
 void displayConfirmExit(void);
+void sleepProgram(int milliseconds);
 
 /**
  * Initialize the algorithms array. This is made global as multiple functions access it.
@@ -134,6 +135,7 @@ int main(void) {
                 // Generate the data
                 printf("\nGenerating data...");
                 unsortedArr = generateRandomIntegers(numOfIntegers);
+
                 // Output the data to a file
                 appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
 
@@ -270,7 +272,7 @@ void runBenchmark(unsigned long int *array, int n) {
         algorithms[i].time = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
 
         printf("\n[%s] Sorting finished!", algorithms[i].name);
-        printf("\n[%s] Time taken: %.9lf secs", algorithms[i].name, algorithms[i].time);
+        printf("\n[%s] Time taken: %.9lfsecs", algorithms[i].name, algorithms[i].time);
 
         // Clear and output the sorted data into a file per algorithm
         clearFile(algorithms[i].outputFile);
@@ -282,6 +284,9 @@ void runBenchmark(unsigned long int *array, int n) {
 
         free(arrayCopy);
     }
+
+    printf("\nBenchmarks complete!");
+    sleepProgram(3500);
 }
 
 /*
@@ -575,4 +580,11 @@ void displayConfirmExit(void) {
             while (getchar() != '\n');
         }
     } while(response != 'Y');
+}
+void sleepProgram(int milliseconds) {
+    #ifdef _WIN32
+        Sleep(milliseconds);
+    #else
+        usleep(milliseconds * 1000);
+    #endif
 }
