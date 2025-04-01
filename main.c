@@ -75,6 +75,9 @@ void clearScreen(void);
 void displayHeader(void);
 void displayConfirmExit(void);
 
+/**
+ * Initialize the algorithms array. This is made global as multiple functions access it.
+*/
 SortingAlgorithm algorithms[] = {
     {"Selection Sort", "output/selection-sort.txt", 0.0, selectionSort},
     {"Bubble Sort", "output/bubble-sort.txt", 0.0,  bubbleSort},
