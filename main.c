@@ -71,6 +71,7 @@ void clearFile(const char *filename);
 void appendStringToFile(const char *filename, const char *format, ...);
 void appendArrayToFile(const char *filename, unsigned long int *array, int n);
 unsigned long int *duplicateArray(const unsigned long int *array, int n);
+SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n);
 void clearScreen(void);
 void displayHeader(void);
 void displayConfirmExit(void);
@@ -91,7 +92,7 @@ int algorithmsSize = sizeof(algorithms)/sizeof(algorithms[0]);
 int main(void) { 
     int isExit = 0;
     while(!isExit) {
-        clearScreen();
+        // clearScreen();
         displayHeader();
 
         // Prompt for N
@@ -503,6 +504,18 @@ unsigned long int *duplicateArray(const unsigned long int *array, int n) {
         fprintf(stderr, "Memory allocation failed\n");
         return NULL;
     }
+    for (int i = 0; i < n; i++) {
+        copy[i] = array[i];
+    }
+    return copy;
+}
+SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n) {
+    SortingAlgorithm *copy = malloc(n * sizeof(SortingAlgorithm));
+    if (copy == NULL) {
+        printf("Memory allocation failed!\n");
+        exit(1);
+    }
+
     for (int i = 0; i < n; i++) {
         copy[i] = array[i];
     }
