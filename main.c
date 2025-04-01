@@ -173,6 +173,7 @@ int main(void) {
                 break;
         }
 
+        // Sort the algortihms array by time 
         SortingAlgorithm *algorithmsCopy = duplicateAlgorithmsArray(algorithms, algorithmsSize);
         qsort(algorithmsCopy, algorithmsSize, sizeof(SortingAlgorithm), compareByTime);
 
