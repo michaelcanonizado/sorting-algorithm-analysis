@@ -173,6 +173,9 @@ int main(void) {
                 break;
         }
 
+        SortingAlgorithm *algorithmsCopy = duplicateAlgorithmsArray(algorithms, algorithmsSize);
+        qsort(algorithmsCopy, algorithmsSize, sizeof(SortingAlgorithm), compareByTime);
+
         // Clear the terminal as the benchmark results will be displayed
         clearScreen();
         displayHeader();
@@ -194,11 +197,12 @@ int main(void) {
         printf("\n|  Rank |    Algorithm    |    Time    |");
         printf("\n----------------------------------------");
         for(int i = 0; i < algorithmsSize; i++) {
-            printf("\n|%6d | %15s | %.9lf|", i+1, algorithms[i].name, algorithms[i].time);
+            printf("\n|%6d | %15s | %.9lf|", i+1, algorithmsCopy[i].name, algorithmsCopy[i].time);
         }
         printf("\n----------------------------------------");
 
         displayConfirmExit();
+        free(algorithmsCopy);
     }
     return 0;
 }
