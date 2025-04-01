@@ -89,10 +89,13 @@ int main(void) {
     while(!isExit) {
         clearScreen();
         displayHeader();
+
+        // Prompt for N
         int numOfIntegers = 0;
         printf("\nNumber of integers (N): ");
         scanf("%d", &numOfIntegers);
 
+        // Print data generation methods
         char *dataGenerationMethods[] = {
             "Random integers",
             "Increasing Sequence"
@@ -103,6 +106,7 @@ int main(void) {
             printf("\n\t%d) %s", i+1, dataGenerationMethods[i]);
         }
 
+        // Get data generation method
         int selectedGenerationMethod = 0;
         printf("\nPlease choose a method: ");
         scanf("%d", &selectedGenerationMethod);
@@ -111,30 +115,36 @@ int main(void) {
         unsigned long int startingValue = 0;
         char *unsortedArrayOutputFile = "output/unsorted.txt";
 
+        // After every run, clear the unsorted output file
         clearFile(unsortedArrayOutputFile);
         appendStringToFile(unsortedArrayOutputFile, "\nUnsorted Array | Number of elements (N): %d\n", numOfIntegers);
 
         switch (selectedGenerationMethod) {
             case 1:
+                // Generate the data
                 unsortedArr = generateRandomIntegers(numOfIntegers);
                 
+                // Output the data to a file
                 appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
 
+                // Run benchmarks on the data
                 runBenchmark(unsortedArr, numOfIntegers);
                 free(unsortedArr);
                 break;
             case 2:
+                // Verify that the starting value (X) is a positive integer
                 while (1) {
                     long long int temp;
             
                     printf("What is the starting value? (X): ");
                     if (scanf("%lld", &temp) != 1) {  
-                        // Invalid input (e.g., letters)
+                        // Invalid input: Non-numeric
                         printf("Invalid input. Please enter a non-negative number.\n");
                         while (getchar() != '\n');
                         continue;
                     }
             
+                    // Invalid input: Negative integer
                     if (temp < 0) {
                         printf("Negative integers are not allowed. Try again.\n");
                     } else {
@@ -143,10 +153,13 @@ int main(void) {
                     }
                 }
 
+                // Generate the data
                 unsortedArr = generateIncreasingSequence(numOfIntegers, startingValue);
 
+                // Output the data to a file
                 appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
 
+                // Run benchmarks on the data
                 runBenchmark(unsortedArr, numOfIntegers);
                 free(unsortedArr);
                 break;
@@ -154,8 +167,11 @@ int main(void) {
                 break;
         }
 
+        // Clear the terminal as the benchmark results will be displayed
         clearScreen();
         displayHeader();
+
+        // Data generation information
         printf("\nNumber of Elements (N): %d", numOfIntegers);
         printf("\nGeneration Method: ");
         if (selectedGenerationMethod == 1) {
@@ -167,7 +183,7 @@ int main(void) {
             printf("\nStarting Value (X): %lu", startingValue);
         }
         
-
+        // Algorithm benchamrks
         printf("\n----------------------------------------");
         printf("\n|  Rank |    Algorithm    |    Time    |");
         printf("\n----------------------------------------");
