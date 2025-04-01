@@ -3,6 +3,10 @@
 #include <ctype.h>
 #include <time.h>
 #include <windows.h>
+#include <limits.h>
+#include <stdint.h>
+
+#define MAX_RANGE ULONG_MAX
 
 /**
  * @struct SortingAlgorithm
@@ -18,7 +22,7 @@ typedef struct {
     const char *name;
     const char *outputFile;
     double time;
-    void (*function)(int[], int);
+    void (*function)(unsigned long int*, int);
 } SortingAlgorithm;
 
 /**
@@ -26,36 +30,36 @@ typedef struct {
  * @param n The size of the resulting array.
  * @return The dynamically allocated array. It needs to be manually freed when used.
  */
-int *generateRandomIntegers(int n);
+unsigned long int *generateRandomIntegers(int n);
 /**
  * @brief Generates an array of integers in increasing order
  * @param n The size of the resulting array
  * @param startingValue The value of the first element of the ordered array.
  * @return The dynamically allocated array. It needs to be manually freed when used.
  */
-int *generateIncreasingSequence(int n, int startingValue);
+unsigned long int *generateIncreasingSequence(int n, unsigned long int startingValue);
 
 /**
  * @brief temp
  * @param temp Temp
  */
-void runBenchmark(int *array, int n);
+void runBenchmark(unsigned long int *array, int n);
 
 /*
 *
 * SORTING ALGORITHMS
 *
 */
-void selectionSort(int array[], int n);
-void bubbleSort(int array[], int n);
-void insertionSort(int array[], int n);
-void merge(int array[], int left, int mid, int right);
-void mergeSortHelper(int array[], int left, int right);
-void mergeSort(int array[], int n);
-int quickSortPartition(int array[], int low, int high);
-void quickSortHelper(int array[], int low, int high);
-void quickSort(int array[], int n);
-void heapSort(int array[], int n);
+void selectionSort(unsigned long int *array, int n);
+void bubbleSort(unsigned long int *array, int n);
+void insertionSort(unsigned long int *array, int n);
+void merge(unsigned long int *array, int left, int mid, int right);
+void mergeSortHelper(unsigned long int *array, int left, int right);
+void mergeSort(unsigned long int *array, int n);
+int quickSortPartition(unsigned long int *array, int low, int high);
+void quickSortHelper(unsigned long int *array, int low, int high);
+void quickSort(unsigned long int *array, int n);
+void heapSort(unsigned long int *array, int n);
 
 /**
  * 
@@ -64,8 +68,8 @@ void heapSort(int array[], int n);
 */
 void clearFile(const char *filename);
 void appendStringToFile(const char *filename, const char *format, ...);
-void appendArrayToFile(const char *filename, int *array, int n);
-int* duplicateArray(const int *array, int n);
+void appendArrayToFile(const char *filename, unsigned long int *array, int n);
+unsigned long int *duplicateArray(const unsigned long int *array, int n);
 void clearScreen(void);
 void displayHeader(void);
 void displayConfirmExit(void);
@@ -83,7 +87,7 @@ int algorithmsSize = sizeof(algorithms)/sizeof(algorithms[0]);
 int main(void) { 
     int isExit = 0;
     while(!isExit) {
-        clearScreen();
+        // clearScreen();
         displayHeader();
         int numOfIntegers = 0;
         printf("\nNumber of integers (N): ");
@@ -103,7 +107,8 @@ int main(void) {
         printf("\nPlease choose a method: ");
         scanf("%d", &selectedGenerationMethod);
 
-        int *unsortedArr, startingValue = 0;
+        unsigned long int *unsortedArr;
+        unsigned long int startingValue = 0;
         char *unsortedArrayOutputFile = "output/unsorted.txt";
 
         clearFile(unsortedArrayOutputFile);
@@ -120,7 +125,7 @@ int main(void) {
                 break;
             case 2:
                 printf("What is the starting value? (X): ");
-                scanf("%d", &startingValue);
+                scanf("%lu", &startingValue);
                 unsortedArr = generateIncreasingSequence(numOfIntegers, startingValue);
 
                 appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
@@ -142,7 +147,7 @@ int main(void) {
             printf("Increasing Sequence");
         }
         if (selectedGenerationMethod == 2) {
-            printf("\nStarting Value (X): %d", startingValue);
+            printf("\nStarting Value (X): %lu", startingValue);
         }
         
 
@@ -164,28 +169,35 @@ int main(void) {
 * DATA GENERATION METHODS
 *
 */
-int *generateRandomIntegers(int n) {
-    int *arr = (int *)malloc(n * sizeof(int));
+unsigned long int *generateRandomIntegers(int n) {
+    unsigned long int *array = (unsigned long int *)malloc(n * sizeof(unsigned long int));
+    
+    srand(time(NULL));
     for(int i = 0; i < n; i++) {
-        arr[i] = i;
+        // Generate two 32-bit random numbers
+        unsigned long int high = (unsigned long int)rand();
+        unsigned long int low = (unsigned long int)rand();
+        // Use bitwise shifting and mask to form a larger number
+        unsigned long int randomNumber = (((high & 0xFFFF) << 16) | (low & 0xFFFF)) % (MAX_RANGE - 1);
+        array[i] = randomNumber;
     }
-    return arr;
+    return array;
 }
-int *generateIncreasingSequence(int n, int startingValue) {
-    int *arr = (int *)malloc(n * sizeof(int));
+unsigned long int *generateIncreasingSequence(int n, unsigned long int startingValue) {
+    unsigned long int *array = (unsigned long int *)malloc(n * sizeof(unsigned long int));
     for(int i = 0; i < n; i++) {
-        arr[i] = startingValue++;
+        array[i] = startingValue++;
     }
-    return arr;
+    return array;
 }
 
-void runBenchmark(int *array, int n) {
+void runBenchmark(unsigned long int *array, int n) {
     LARGE_INTEGER frequency, start, end;
     QueryPerformanceFrequency(&frequency);
 
     appendStringToFile("results.csv", "\n");
     for(int i = 0; i < algorithmsSize; i++) {
-        int* arrayCopy = duplicateArray(array, n);
+        unsigned long int *arrayCopy = duplicateArray(array, n);
 
         QueryPerformanceCounter(&start);
         algorithms[i].function(arrayCopy, n);
@@ -206,7 +218,7 @@ void runBenchmark(int *array, int n) {
 * SORTING ALGORITHMS
 *
 */
-void selectionSort(int array[], int n) {
+void selectionSort(unsigned long int *array, int n) {
     for (int i = 0; i < n - 1; i++) {
         int minIndex = i;
         for (int j = i + 1; j < n; j++) {
@@ -215,18 +227,18 @@ void selectionSort(int array[], int n) {
             }
         }
         // Swap
-        int temp = array[i];
+        unsigned long int temp = array[i];
         array[i] = array[minIndex];
         array[minIndex] = temp;
     }
 }
-void bubbleSort(int array[], int n) {
+void bubbleSort(unsigned long int *array, int n) {
     for (int i = 0; i < n - 1; i++) {
         int swapped = 0;
         for (int j = 0; j < n - i - 1; j++) {
             if (array[j] > array[j + 1]) {
                 // Swap
-                int temp = array[j];
+                unsigned long int temp = array[j];
                 array[j] = array[j + 1];
                 array[j + 1] = temp;
                 swapped = 1;
@@ -236,10 +248,10 @@ void bubbleSort(int array[], int n) {
         if (!swapped) break;
     }
 }
-void insertionSort(int array[], int n) {
+void insertionSort(unsigned long int *array, int n) {
     for (int i = 1; i < n; i++) {
         // Store the current element
-        int key = array[i];
+        unsigned long int key = array[i];
         int j = i - 1;
 
         // Shift elements greater than key to the right
@@ -252,13 +264,13 @@ void insertionSort(int array[], int n) {
         array[j + 1] = key;
     }
 }
-void merge(int array[], int left, int mid, int right) {
+void merge(unsigned long int *array, int left, int mid, int right) {
     int leftSize = mid - left + 1;
     int rightSize = right - mid;
 
     // Allocate memory dynamically
-    int* leftArray = (int*)malloc(leftSize * sizeof(int));
-    int* rightArray = (int*)malloc(rightSize * sizeof(int));
+    unsigned long int *leftArray = (unsigned long int *)malloc(leftSize * sizeof(unsigned long int));
+    unsigned long int *rightArray = (unsigned long int *)malloc(rightSize * sizeof(unsigned long int));
 
     // Check for memory allocation failure
     if (leftArray == NULL || rightArray == NULL) {
@@ -297,7 +309,7 @@ void merge(int array[], int left, int mid, int right) {
     free(leftArray);
     free(rightArray);
 }
-void mergeSortHelper(int array[], int left, int right) {
+void mergeSortHelper(unsigned long int *array, int left, int right) {
     if (left < right) {
         // Find the middle index
         int mid = left + (right - left) / 2;
@@ -310,32 +322,32 @@ void mergeSortHelper(int array[], int left, int right) {
         merge(array, left, mid, right);
     }
 }
-void mergeSort(int array[], int n) {
+void mergeSort(unsigned long int *array, int n) {
     mergeSortHelper(array, 0, n - 1);
 }
-int quickSortPartition(int array[], int low, int high) {
+int quickSortPartition(unsigned long int *array, int low, int high) {
     // Choose the pivot element (last element)
-    int pivot = array[high];
+    unsigned long int pivot = array[high];
     int i = low - 1;
 
     for (int j = low; j < high; j++) {
         // If current element is smaller than the pivot, swap
         if (array[j] < pivot) {
             i++;
-            int temp = array[i];
+            unsigned long int temp = array[i];
             array[i] = array[j];
             array[j] = temp;
         }
     }
 
     // Place pivot at its correct position
-    int temp = array[i + 1];
+    unsigned long int temp = array[i + 1];
     array[i + 1] = array[high];
     array[high] = temp;
 
     return i + 1;
 }
-void quickSortHelper(int array[], int low, int high) {
+void quickSortHelper(unsigned long int *array, int low, int high) {
     if (low < high) {
         // Partition the array and get the pivot index
         int pivotIndex = quickSortPartition(array, low, high);
@@ -344,10 +356,10 @@ void quickSortHelper(int array[], int low, int high) {
         quickSortHelper(array, pivotIndex + 1, high);
     }
 }
-void quickSort(int array[], int n) {
+void quickSort(unsigned long int *array, int n) {
     quickSortHelper(array, 0, n - 1);
 }
-void heapify(int array[], int n, int root) {
+void heapify(unsigned long int *array, int n, int root) {
     int largest = root;
     int leftChild = 2 * root + 1;
     int rightChild = 2 * root + 2;
@@ -364,14 +376,14 @@ void heapify(int array[], int n, int root) {
 
     // Swap and continue heapifying if root is not the largest
     if (largest != root) {
-        int temp = array[root];
+        unsigned long int temp = array[root];
         array[root] = array[largest];
         array[largest] = temp;
 
         heapify(array, n, largest);
     }
 }
-void heapSort(int array[], int n) {
+void heapSort(unsigned long int *array, int n) {
     // Build a max heap
     for (int i = n / 2 - 1; i >= 0; i--) {
         heapify(array, n, i);
@@ -380,7 +392,7 @@ void heapSort(int array[], int n) {
     // Extract elements one by one from heap
     for (int i = n - 1; i > 0; i--) {
         // Swap root (largest) with the last element
-        int temp = array[0];
+        unsigned long int temp = array[0];
         array[0] = array[i];
         array[i] = temp;
 
@@ -389,6 +401,11 @@ void heapSort(int array[], int n) {
     }
 }
 
+/*
+*
+* UTILITIES
+*
+*/
 void clearFile(const char *filename) {
     FILE *file = fopen(filename, "w");
     if (file == NULL) {
@@ -412,7 +429,7 @@ void appendStringToFile(const char *filename, const char *format, ...) {
 
     fclose(file);
 }
-void appendArrayToFile(const char *filename, int *array, int n) {
+void appendArrayToFile(const char *filename, unsigned long int *array, int n) {
     FILE *file = fopen(filename, "a");
     if (file == NULL) {
         fprintf(stderr, "Error opening file: %s\n", filename);
@@ -420,7 +437,7 @@ void appendArrayToFile(const char *filename, int *array, int n) {
     }
 
     for (int i = 0; i < n; i++) {
-        fprintf(file, "%d", array[i]);
+        fprintf(file, "%lu", array[i]);
         if (i < n - 1) {
             fprintf(file, ",");
         }
@@ -432,8 +449,8 @@ void appendArrayToFile(const char *filename, int *array, int n) {
 
     fclose(file);
 }
-int* duplicateArray(const int *array, int n) {
-    int *copy = malloc(n * sizeof(int));
+unsigned long int *duplicateArray(const unsigned long int *array, int n) {
+    unsigned long int *copy = malloc(n * sizeof(unsigned long int));
     if (copy == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         return NULL;
