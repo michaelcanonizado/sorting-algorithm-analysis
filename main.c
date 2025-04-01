@@ -256,6 +256,8 @@ void runBenchmark(unsigned long int *array, int n) {
 
         // Append the elapsed time to results.csv
         appendStringToFile("results.csv", "%.9lf,", algorithms[i].time);
+
+        free(arrayCopy);
     }
 }
 
