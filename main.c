@@ -218,6 +218,7 @@ unsigned long int *generateRandomIntegers(int n) {
 }
 unsigned long int *generateIncreasingSequence(int n, unsigned long int startingValue) {
     unsigned long int *array = (unsigned long int *)malloc(n * sizeof(unsigned long int));
+    // Starting from the starting value, increment until the whole array is filled
     for(int i = 0; i < n; i++) {
         array[i] = startingValue++;
     }
