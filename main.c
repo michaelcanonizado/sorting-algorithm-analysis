@@ -87,7 +87,7 @@ int algorithmsSize = sizeof(algorithms)/sizeof(algorithms[0]);
 int main(void) { 
     int isExit = 0;
     while(!isExit) {
-        // clearScreen();
+        clearScreen();
         displayHeader();
         int numOfIntegers = 0;
         printf("\nNumber of integers (N): ");
@@ -124,8 +124,25 @@ int main(void) {
                 free(unsortedArr);
                 break;
             case 2:
-                printf("What is the starting value? (X): ");
-                scanf("%lu", &startingValue);
+                while (1) {
+                    long long int temp;
+            
+                    printf("What is the starting value? (X): ");
+                    if (scanf("%lld", &temp) != 1) {  
+                        // Invalid input (e.g., letters)
+                        printf("Invalid input. Please enter a non-negative number.\n");
+                        while (getchar() != '\n');
+                        continue;
+                    }
+            
+                    if (temp < 0) {
+                        printf("Negative integers are not allowed. Try again.\n");
+                    } else {
+                        startingValue = (unsigned long int)temp;
+                        break;
+                    }
+                }
+
                 unsortedArr = generateIncreasingSequence(numOfIntegers, startingValue);
 
                 appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
