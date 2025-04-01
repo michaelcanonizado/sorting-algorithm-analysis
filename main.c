@@ -57,6 +57,7 @@ void insertionSort(unsigned long int *array, int n);
 void merge(unsigned long int *array, int left, int mid, int right);
 void mergeSortHelper(unsigned long int *array, int left, int right);
 void mergeSort(unsigned long int *array, int n);
+int medianOfThree(unsigned long int *array, int low, int high);
 int quickSortPartition(unsigned long int *array, int low, int high);
 void quickSortHelper(unsigned long int *array, int low, int high);
 void quickSort(unsigned long int *array, int n);
@@ -401,9 +402,36 @@ void mergeSortHelper(unsigned long int *array, int left, int right) {
 void mergeSort(unsigned long int *array, int n) {
     mergeSortHelper(array, 0, n - 1);
 }
+int medianOfThree(unsigned long int *array, int low, int high) {
+    int mid = low + (high - low) / 2;
+    
+    // Arrange low, mid, high in sorted order
+    if (array[low] > array[mid]) {
+        unsigned long int temp = array[low];
+        array[low] = array[mid];
+        array[mid] = temp;
+    }
+    if (array[low] > array[high]) {
+        unsigned long int temp = array[low];
+        array[low] = array[high];
+        array[high] = temp;
+    }
+    if (array[mid] > array[high]) {
+        unsigned long int temp = array[mid];
+        array[mid] = array[high];
+        array[high] = temp;
+    }
+    
+    // Median is now at mid, swap it with high so partitioning remains the same
+    unsigned long int temp = array[mid];
+    array[mid] = array[high];
+    array[high] = temp;
+    
+    return array[high]; // Pivot value
+}
 int quickSortPartition(unsigned long int *array, int low, int high) {
-    // Choose the pivot element (last element)
-    unsigned long int pivot = array[high];
+    // Choose the median-of-three as pivot
+    unsigned long int pivot = medianOfThree(array, low, high);
     int i = low - 1;
 
     for (int j = low; j < high; j++) {
