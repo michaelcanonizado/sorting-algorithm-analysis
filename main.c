@@ -93,14 +93,14 @@ int main(void) {
         printf("\nNumber of integers (N): ");
         scanf("%d", &numOfIntegers);
 
-        char *menuOptions[] = {
+        char *dataGenerationMethods[] = {
             "Random integers",
             "Increasing Sequence"
         };
-        int menuOptionsSize = sizeof(menuOptions)/sizeof(menuOptions[0]);
+        int dataGenerationMethodsSize = sizeof(dataGenerationMethods)/sizeof(dataGenerationMethods[0]);
         printf("Data Generation Method:");
-        for(int i = 0; i < menuOptionsSize; i++) {
-            printf("\n\t%d) %s", i+1, menuOptions[i]);
+        for(int i = 0; i < dataGenerationMethodsSize; i++) {
+            printf("\n\t%d) %s", i+1, dataGenerationMethods[i]);
         }
 
         int selectedGenerationMethod = 0;
