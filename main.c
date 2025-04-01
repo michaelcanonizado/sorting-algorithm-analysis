@@ -72,6 +72,7 @@ void appendStringToFile(const char *filename, const char *format, ...);
 void appendArrayToFile(const char *filename, unsigned long int *array, int n);
 unsigned long int *duplicateArray(const unsigned long int *array, int n);
 SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n);
+int compareByTime(const void *a, const void *b);
 void clearScreen(void);
 void displayHeader(void);
 void displayConfirmExit(void);
@@ -520,6 +521,15 @@ SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n) {
         copy[i] = array[i];
     }
     return copy;
+}
+int compareByTime(const void *a, const void *b) {
+    SortingAlgorithm *algorithmA = (SortingAlgorithm *)a;
+    SortingAlgorithm *algorithmB = (SortingAlgorithm *)b;
+
+    // Compare the times (ascending order)
+    if (algorithmA->time < algorithmB->time) return -1;
+    if (algorithmA->time > algorithmB->time) return 1;
+    return 0;
 }
 void clearScreen(void) {
     #ifdef _WIN32
