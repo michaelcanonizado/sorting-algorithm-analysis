@@ -40,8 +40,9 @@ unsigned long int *generateRandomIntegers(int n);
 unsigned long int *generateIncreasingSequence(int n, unsigned long int startingValue);
 
 /**
- * @brief temp
- * @param temp Temp
+ * @brief The function that runs each algorithms and records the time
+ * @param array The unsorted array used on the sorting algorithms
+ * @param n The size of the unsorted array
  */
 void runBenchmark(unsigned long int *array, int n);
 
