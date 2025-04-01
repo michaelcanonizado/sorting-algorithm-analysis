@@ -127,9 +127,13 @@ int main(void) {
 
         switch (selectedGenerationMethod) {
             case 1:
+                // Clear the terminal as data about the current algorithm will be displayed
+                clearScreen();
+                displayHeader();
+
                 // Generate the data
+                printf("\nGenerating data...");
                 unsortedArr = generateRandomIntegers(numOfIntegers);
-                
                 // Output the data to a file
                 appendArrayToFile(unsortedArrayOutputFile, unsortedArr, numOfIntegers);
 
@@ -159,7 +163,12 @@ int main(void) {
                     }
                 }
 
+                // Clear the terminal as data about the current algorithm will be displayed
+                clearScreen();
+                displayHeader();
+
                 // Generate the data
+                printf("\nGenerating data...");
                 unsortedArr = generateIncreasingSequence(numOfIntegers, startingValue);
 
                 // Output the data to a file
@@ -194,13 +203,13 @@ int main(void) {
         }
         
         // Algorithm benchamrks
-        printf("\n----------------------------------------");
-        printf("\n|  Rank |    Algorithm    |    Time    |");
-        printf("\n----------------------------------------");
+        printf("\n-----------------------------------------------");
+        printf("\n| Rank |       Algorithm      |      Time     |");
+        printf("\n-----------------------------------------------");
         for(int i = 0; i < algorithmsSize; i++) {
-            printf("\n|%6d | %15s | %.9lf|", i+1, algorithmsCopy[i].name, algorithmsCopy[i].time);
+            printf("\n|%5d | %20s | %14.9lf|", i+1, algorithmsCopy[i].name, algorithmsCopy[i].time);
         }
-        printf("\n----------------------------------------");
+        printf("\n-----------------------------------------------");
 
         displayConfirmExit();
         free(algorithmsCopy);
@@ -237,10 +246,6 @@ unsigned long int *generateIncreasingSequence(int n, unsigned long int startingV
 }
 
 void runBenchmark(unsigned long int *array, int n) {
-    // Clear the terminal as data about the current algorithm will be displayed
-    clearScreen();
-    displayHeader();
-
     LARGE_INTEGER frequency, start, end;
     QueryPerformanceFrequency(&frequency);
 
@@ -269,7 +274,7 @@ void runBenchmark(unsigned long int *array, int n) {
 
         // Clear and output the sorted data into a file per algorithm
         clearFile(algorithms[i].outputFile);
-        appendStringToFile(algorithms[i].outputFile, "\n%s Sorted Array | Number of elements (N): %d | Time take: %.9lf\n",algorithms[i].name, n, algorithms[i].time);
+        appendStringToFile(algorithms[i].outputFile, "\n%s Sorted Array | Number of elements (N): %d | Time take: %.9lf\n\n",algorithms[i].name, n, algorithms[i].time);
         appendArrayToFile(algorithms[i].outputFile, arrayCopy, n);
 
         // Append the elapsed time to results.csv
@@ -556,9 +561,9 @@ void clearScreen(void) {
     #endif
 }
 void displayHeader(void) {
-    printf("\n----------------------------------------");
-    printf("\n       Sorting Algorithm Analysis");
-    printf("\n----------------------------------------");
+    printf("\n-----------------------------------------------");
+    printf("\n           Sorting Algorithm Analysis");
+    printf("\n-----------------------------------------------");
 }
 void displayConfirmExit(void) {
     char response;
