@@ -93,7 +93,7 @@ int algorithmsSize = sizeof(algorithms)/sizeof(algorithms[0]);
 int main(void) { 
     int isExit = 0;
     while(!isExit) {
-        // clearScreen();
+        clearScreen();
         displayHeader();
 
         // Prompt for N
@@ -237,14 +237,22 @@ unsigned long int *generateIncreasingSequence(int n, unsigned long int startingV
 }
 
 void runBenchmark(unsigned long int *array, int n) {
+    // Clear the terminal as data about the current algorithm will be displayed
+    clearScreen();
+    displayHeader();
+
     LARGE_INTEGER frequency, start, end;
     QueryPerformanceFrequency(&frequency);
 
     // The benchmarks result will also be outputted in a csv
     appendStringToFile("results.csv", "\n");
+
+    printf("\nRunning benchmarks...");
     for(int i = 0; i < algorithmsSize; i++) {
         // Duplicate the data for each sorting algorithm
         unsigned long int *arrayCopy = duplicateArray(array, n);
+
+        printf("\n[%s] Sorting in progress...", algorithms[i].name);
 
         // Start the timer
         QueryPerformanceCounter(&start);
@@ -255,6 +263,9 @@ void runBenchmark(unsigned long int *array, int n) {
 
         // Calculate the elapsed time
         algorithms[i].time = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
+
+        printf("\n[%s] Sorting finished!", algorithms[i].name);
+        printf("\n[%s] Time taken: %.9lf secs", algorithms[i].name, algorithms[i].time);
 
         // Clear and output the sorted data into a file per algorithm
         clearFile(algorithms[i].outputFile);
