@@ -68,6 +68,12 @@ void heapSort(unsigned long int *array, int n);
  * @param filename The name of the file to be cleared.
 */
 void clearFile(const char *filename);
+/**
+ * @brief Appends a formatted string to a file.
+ * @param filename The name of the file to append to.
+ * @param format The format string (supports printf-style formatting).
+ * @param ... Additional arguments for formatting.
+ */
 void appendStringToFile(const char *filename, const char *format, ...);
 void appendArrayToFile(const char *filename, unsigned long int *array, int n);
 unsigned long int *duplicateArray(const unsigned long int *array, int n);
