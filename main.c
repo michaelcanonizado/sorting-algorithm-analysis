@@ -103,6 +103,9 @@ SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n);
  * @return A negative value if a < b, 0 if equal, a positive value if a > b.
  */
 int compareByTime(const void *a, const void *b);
+/**
+ * @brief Clears the terminal screen.
+ */
 void clearScreen(void);
 void displayHeader(void);
 void displayConfirmExit(void);
