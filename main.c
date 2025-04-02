@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <time.h>
-#include <windows.h>
 #include <limits.h>
 #include <stdint.h>
+#include <time.h>
+#ifdef _WIN32
+    #include <windows.h>
+#endif
 
 #define MAX_RANGE ULONG_MAX
 
@@ -619,10 +621,16 @@ SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n) {
     return copy;
 }
 double getTimeInSeconds(void) {
-    LARGE_INTEGER frequency, start;
-    QueryPerformanceFrequency(&frequency);
-    QueryPerformanceCounter(&start);
-    return (double)start.QuadPart / frequency.QuadPart;
+    #ifdef _WIN32
+        LARGE_INTEGER frequency, start;
+        QueryPerformanceFrequency(&frequency);
+        QueryPerformanceCounter(&start);
+        return (double)start.QuadPart / (double)frequency.QuadPart;
+    #else
+        struct timespec ts;
+        clock_gettime(CLOCK_MONOTONIC, &ts);
+        return (double)ts.tv_sec + ((double)ts.tv_nsec / 1e9);
+    #endif
 }
 int compareByTime(const void *a, const void *b) {
     SortingAlgorithm *algorithmA = (SortingAlgorithm *)a;
