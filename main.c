@@ -100,6 +100,7 @@ unsigned long int *duplicateArray(const unsigned long int *array, int n);
  * @return A pointer to the newly allocated duplicate array.
  */
 SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n);
+unsigned long int getPositiveInteger(const char *prompt);
 /**
  * @brief Gives the current time in seconds.
  * @returns The calculated time.
@@ -150,9 +151,8 @@ int main(void) {
         displayHeader();
 
         // Prompt for N
-        int numOfIntegers = 0;
-        printf("\nNumber of integers (N): ");
-        scanf("%d", &numOfIntegers);
+        printf("\n");
+        int numOfIntegers = (int)getPositiveInteger("Number of integers (N): ");
 
         // Print data generation methods
         char *dataGenerationMethods[] = {
@@ -197,25 +197,7 @@ int main(void) {
                 break;
             case 2:
                 // Verify that the starting value (X) is a positive integer
-                while (1) {
-                    long long int temp;
-            
-                    printf("What is the starting value? (X): ");
-                    if (scanf("%lld", &temp) != 1) {  
-                        // Invalid input: Non-numeric
-                        printf("Invalid input. Please enter a non-negative number.\n");
-                        while (getchar() != '\n');
-                        continue;
-                    }
-            
-                    // Invalid input: Negative integer
-                    if (temp < 0) {
-                        printf("Negative integers are not allowed. Try again.\n");
-                    } else {
-                        startingValue = (unsigned long int)temp;
-                        break;
-                    }
-                }
+                startingValue = getPositiveInteger("What is the starting value? (X): ");
 
                 // Clear the terminal as data about the current algorithm will be displayed
                 clearScreen();
@@ -623,6 +605,26 @@ SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n) {
         copy[i] = array[i];
     }
     return copy;
+}
+unsigned long int getPositiveInteger(const char *prompt) {
+    while (1) {
+        long long int temp;
+
+        printf("%s", prompt);
+        if (scanf("%lld", &temp) != 1) {  
+            // Invalid input: Non-numeric
+            printf("Invalid input. Please enter a non-negative number\n");
+            while (getchar() != '\n');
+            continue;
+        }
+
+        // Invalid input: Negative integer
+        if (temp < 0) {
+            printf("Negative integers are not allowed. Try again.\n");
+        } else {
+            return (unsigned long int)temp;
+        }
+    }
 }
 double getTimeInSeconds(void) {
     #ifdef _WIN32
