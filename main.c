@@ -89,6 +89,12 @@ void appendArrayToFile(const char *filename, unsigned long int *array, int n);
  * @return A pointer to the newly allocated duplicate array.
  */
 unsigned long int *duplicateArray(const unsigned long int *array, int n);
+/**
+ * @brief Creates a duplicate of an array of SortingAlgorithm structures.
+ * @param array The original array of SortingAlgorithm structures.
+ * @param n The number of elements in the array.
+ * @return A pointer to the newly allocated duplicate array.
+ */
 SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n);
 int compareByTime(const void *a, const void *b);
 void clearScreen(void);
