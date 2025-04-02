@@ -75,6 +75,12 @@ void clearFile(const char *filename);
  * @param ... Additional arguments for formatting.
  */
 void appendStringToFile(const char *filename, const char *format, ...);
+/**
+ * @brief Appends an array of unsigned long integers to a file.
+ * @param filename The name of the file to append to.
+ * @param array The array of unsigned long integers.
+ * @param n The number of elements in the array.
+ */
 void appendArrayToFile(const char *filename, unsigned long int *array, int n);
 unsigned long int *duplicateArray(const unsigned long int *array, int n);
 SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n);
