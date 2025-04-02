@@ -82,6 +82,12 @@ void appendStringToFile(const char *filename, const char *format, ...);
  * @param n The number of elements in the array.
  */
 void appendArrayToFile(const char *filename, unsigned long int *array, int n);
+/**
+ * @brief Creates a duplicate of an unsigned long int array.
+ * @param array The original array to be duplicated.
+ * @param n The number of elements in the array.
+ * @return A pointer to the newly allocated duplicate array.
+ */
 unsigned long int *duplicateArray(const unsigned long int *array, int n);
 SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n);
 int compareByTime(const void *a, const void *b);
