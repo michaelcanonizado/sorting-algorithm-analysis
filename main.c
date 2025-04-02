@@ -115,6 +115,10 @@ void displayHeader(void);
  * @brief Displays a confirmation message before exiting the program.
  */
 void displayConfirmExit(void);
+/**
+ * @brief Pauses the program execution for a specified duration.
+ * @param milliseconds The duration to sleep in milliseconds.
+ */
 void sleepProgram(int milliseconds);
 
 /**
