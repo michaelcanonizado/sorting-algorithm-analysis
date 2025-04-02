@@ -107,6 +107,9 @@ int compareByTime(const void *a, const void *b);
  * @brief Clears the terminal screen.
  */
 void clearScreen(void);
+/**
+ * @brief Displays the program header.
+ */
 void displayHeader(void);
 void displayConfirmExit(void);
 void sleepProgram(int milliseconds);
