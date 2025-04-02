@@ -98,6 +98,7 @@ unsigned long int *duplicateArray(const unsigned long int *array, int n);
  * @return A pointer to the newly allocated duplicate array.
  */
 SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n);
+double getTimeInSeconds(void);
 /**
  * @brief The callback function used in qsort()
  * @param a Pointer to the first element.
@@ -293,9 +294,6 @@ unsigned long int *generateIncreasingSequence(int n, unsigned long int startingV
 }
 
 void runBenchmark(unsigned long int *array, int n) {
-    LARGE_INTEGER frequency, start, end;
-    QueryPerformanceFrequency(&frequency);
-
     // The benchmarks result will also be outputted in a csv
     appendStringToFile("results.csv", "\n");
 
@@ -307,14 +305,14 @@ void runBenchmark(unsigned long int *array, int n) {
         printf("\n[%s] Sorting in progress...", algorithms[i].name);
 
         // Start the timer
-        QueryPerformanceCounter(&start);
+        double startTime = getTimeInSeconds();
         // Run the sorting algorithm
         algorithms[i].function(arrayCopy, n);
         // End the timer
-        QueryPerformanceCounter(&end);
+        double endTime = getTimeInSeconds();
 
         // Calculate the elapsed time
-        algorithms[i].time = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
+        algorithms[i].time = endTime - startTime;
 
         printf("\n[%s] Sorting finished!", algorithms[i].name);
         printf("\n[%s] Time taken: %.9lfsecs", algorithms[i].name, algorithms[i].time);
@@ -619,6 +617,12 @@ SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n) {
         copy[i] = array[i];
     }
     return copy;
+}
+double getTimeInSeconds(void) {
+    LARGE_INTEGER frequency, start;
+    QueryPerformanceFrequency(&frequency);
+    QueryPerformanceCounter(&start);
+    return (double)start.QuadPart / frequency.QuadPart;
 }
 int compareByTime(const void *a, const void *b) {
     SortingAlgorithm *algorithmA = (SortingAlgorithm *)a;
