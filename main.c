@@ -16,7 +16,9 @@
  * @var time Time taken for the algorithms to sort
  * @var function Function pointer to its algorithm
  * 
- * This object gives us OOP-like features, encapsulating related data and improves maintainability. It also allows us to perform more complex logic such as iteration on the algorithms, and sorting by a member.
+ * This object gives us OOP-like features, encapsulating related data and
+ * improves maintainability. It also allows us to perform more complex logic
+ *  such as iteration on the algorithms, and sorting by a member.
  */
 typedef struct {
     const char *name;
