@@ -100,6 +100,10 @@ unsigned long int *duplicateArray(const unsigned long int *array, int n);
  * @return A pointer to the newly allocated duplicate array.
  */
 SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n);
+/**
+ * @brief Gives the current time in seconds.
+ * @returns The calculated time.
+*/
 double getTimeInSeconds(void);
 /**
  * @brief The callback function used in qsort()
