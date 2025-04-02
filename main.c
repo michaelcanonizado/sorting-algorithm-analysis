@@ -111,6 +111,9 @@ void clearScreen(void);
  * @brief Displays the program header.
  */
 void displayHeader(void);
+/**
+ * @brief Displays a confirmation message before exiting the program.
+ */
 void displayConfirmExit(void);
 void sleepProgram(int milliseconds);
 
