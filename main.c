@@ -96,6 +96,12 @@ unsigned long int *duplicateArray(const unsigned long int *array, int n);
  * @return A pointer to the newly allocated duplicate array.
  */
 SortingAlgorithm *duplicateAlgorithmsArray(SortingAlgorithm *array, int n);
+/**
+ * @brief The callback function used in qsort()
+ * @param a Pointer to the first element.
+ * @param b Pointer to the second element.
+ * @return A negative value if a < b, 0 if equal, a positive value if a > b.
+ */
 int compareByTime(const void *a, const void *b);
 void clearScreen(void);
 void displayHeader(void);
