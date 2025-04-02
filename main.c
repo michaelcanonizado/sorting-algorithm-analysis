@@ -64,9 +64,8 @@ void quickSort(unsigned long int *array, int n);
 void heapSort(unsigned long int *array, int n);
 
 /**
- * 
- * UTILITIES
- * 
+ * @brief Clears the contents of a file.
+ * @param filename The name of the file to be cleared.
 */
 void clearFile(const char *filename);
 void appendStringToFile(const char *filename, const char *format, ...);
